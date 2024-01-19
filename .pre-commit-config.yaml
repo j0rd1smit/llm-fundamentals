@@ -1,0 +1,53 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+  - id: trailing-whitespace
+  - id: check-yaml
+    args: [--allow-multiple-documents]
+      # Having mixed line endings in your repository will at some point cause trouble
+  - id: mixed-line-ending
+    args: [--fix=lf]
+        # Allow different line ending for some file types
+    exclude: \.(ps1)$
+
+- repo: https://github.com/psf/black
+  rev: 23.7.0
+  hooks:
+  - id: black
+    exclude: ^exercises/
+
+- repo: https://github.com/pycqa/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+    args: ["--profile", "black", "--filter-files"]
+    exclude: ^exercises/
+
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: v0.0.284
+  hooks:
+  - id: ruff
+    args: [--fix]
+
+- repo: local
+  hooks:
+    - id: generate-exercises
+      name: generate-exercises
+      stages: [ commit ]
+      language: python
+      additional_dependencies:
+        - invoke
+      args: [ ]
+      pass_filenames: false
+      entry: invoke generate-exercises
+    - id: jupyter-nb-clear-output
+      name: jupyter-nb-clear-output
+      exclude: ^exercises/.*\.ipynb$
+      files: \.ipynb$
+      stages: [commit]
+      language: python
+      additional_dependencies:
+        - jupyter
+      args: []
+      entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --ClearMetadataPreprocessor.enabled=True --inplace

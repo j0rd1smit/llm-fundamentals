@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "llm-fundamentals"
+version = "0.1.0"
+description = ""
+authors = ["Jordi Smit <j0rd1smit@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 150
+exclude = [
+    'exercises',
+    'streamlit/assignments',
+]
+
+[tool.black]
+exclude = '''
+(
+  /(
+    \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | exercises
+  )/
+  | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+
+[tool.isort]
+profile = "black"
+'''
