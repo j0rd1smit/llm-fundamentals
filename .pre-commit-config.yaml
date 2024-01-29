@@ -41,13 +41,4 @@ repos:
       args: [ ]
       pass_filenames: false
       entry: invoke generate-exercises
-    - id: jupyter-nb-clear-output
-      name: jupyter-nb-clear-output
-      exclude: ^exercises/.*\.ipynb$
-      files: \.ipynb$
-      stages: [commit]
-      language: python
-      additional_dependencies:
-        - jupyter
-      args: []
-      entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --ClearMetadataPreprocessor.enabled=True --inplace
+
